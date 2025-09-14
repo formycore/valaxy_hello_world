@@ -28,3 +28,10 @@ jobs:
 
       - name: Maven Clean Install
         run: mvn clean install
+      
+      - name: Upload build Artifacts
+        uses: actions/upload-artifacts@v3
+        with:
+          name: maven-artifacts
+          path: target/
+          
