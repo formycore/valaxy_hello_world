@@ -23,11 +23,18 @@ jobs:
       - name: Maven Clean Install
         run: mvn clean install
 
-      - name: List target directory
-        run: ls -la target/
+      - name: Find target directories & list artifacts
+        run: |
+          echo "Current working dir: $(pwd)"
+          find . -type d -name target | tee target_dirs.txt
+          for d in $(cat target_dirs.txt); do
+            echo "Contents of $d"
+            ls -la "$d"
+          done
 
-      - name: Upload build Artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: maven-artifacts
-          path: target/*.jar
+          path: |
+            **/target/*.war
